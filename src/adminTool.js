@@ -51,13 +51,12 @@ class AdminTool{
     }
 
     duplicateTitleCheck(newTitle){
-        let duplicateTitle;
         for(let t of this.tasks){
             if(t.title === newTitle){
-                duplicateTitle = true;
+                return true;
             }
         }
-        return duplicateTitle;
+        return false;
     }
 }
 
