@@ -32,7 +32,7 @@ class AdminTool{
     }
     changeStatus(title, newStatus){
         if(!VALID_STATUSES.includes(newStatus)){
-            alert(`invalide status: ${newStatus}. must be one of: ${VALID_STATUSES.join(', ')}`);
+            console.log(`invalid status: ${newStatus}. must be one of: ${VALID_STATUSES.join(', ')}`);
             return;
         }
         for(let t of this.tasks){
@@ -61,3 +61,4 @@ console.log('Incomplete:', tool.listIncompleteTasks());
 console.log('Counts:', tool.countTasksByStatus());
 tool.removeTask('Write docs');
 console.log('After remove:', tool.listAllTasks());
+tool.changeStatus('Deploy Feature', 'Finished');
