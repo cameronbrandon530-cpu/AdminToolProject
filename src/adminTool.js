@@ -8,7 +8,7 @@ class AdminTool{
     }
     addTask(title, priority){
         if(!VALID_PRIORITIES.includes(priority)){
-            console.log(`invalid prioity: ${priority}. Must be one of: ${VALID_PRIORITIES}.join(', ')}`);
+            console.log(`invalid prioity: ${priority}. Must be one of: ${VALID_PRIORITIES.join(', ')}`);
             return;
         }
         this.tasks.push(this.createTask(title, priority));
