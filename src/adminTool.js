@@ -30,15 +30,22 @@ class AdminTool{
         let amountCompleted = this.tasks.length - amountIncomplete;
         return { incomplete: amountIncomplete, completed: amountCompleted };
     }
+    changeStatus(title, newStatus){
+        if(!VALID_STATUSES.includes(newStatus)){
+            alert(`invalide status: ${newStatus}. must be one of: ${VALID_STATUSES.join(', ')}`);
+            return;
+        }
+        for(let t of this.tasks){
+            if(t.title === title){
+                t.status = newStatus;
+            }
+        }
+    }
     removeTask(title){
         this.tasks = this.tasks.filter(t => t.title !== title);
     }
     completeTask(title){
-        for(let t of this.tasks){
-            if(t.title === title){
-                t.status = 'Completed';
-            }
-        }
+        this.changeStatus(title, 'Completed');
     }
 
 }
