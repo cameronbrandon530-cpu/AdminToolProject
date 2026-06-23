@@ -4,15 +4,20 @@ const VALID_PRIORITIES = ['High', 'Medium', 'Low'];
 class AdminTool{
     tasks = [];
     createTask(title, priority){
-        return{title: title, priority: priority, status: 'To Do', createdDate: new Date()};
-    }
+        return {title: title, priority: priority, status: 'To Do', createdDate: new Date()};
+        }
+        
     addTask(title, priority){
         if(!VALID_PRIORITIES.includes(priority)){
             console.log(`invalid prioity: ${priority}. Must be one of: ${VALID_PRIORITIES.join(', ')}`);
             return;
+        } else if (this.duplicateTitleCheck(title)){
+            console.log("Title cannot be duplicate");
+            return;
+        } else {
+        this.tasks.push(this.createTask(title, priority));    
         }
-        this.tasks.push(this.createTask(title, priority));
-    }
+    }    
     listAllTasks(){
         return this.tasks;
     }
@@ -44,21 +49,20 @@ class AdminTool{
     removeTask(title){
         this.tasks = this.tasks.filter(t => t.title !== title);
     }
-    completeTask(title){
-        this.changeStatus(title, 'Completed');
-    }
 
+    duplicateTitleCheck(newTitle){
+        let duplicateTitle;
+        for(let t of this.tasks){
+            if(t.title === newTitle){
+                duplicateTitle = true;
+            }
+        }
+        return duplicateTitle;
+    }
 }
 
 
 let tool = new AdminTool();
 tool.addTask('Fix bug', 'High');
-tool.addTask('Write docs', 'Low');
-tool.addTask('Deploy feature', 'today');
-console.log('All tasks:', tool.listAllTasks());
-tool.completeTask('Fix bug');
-console.log('Incomplete:', tool.listIncompleteTasks());
-console.log('Counts:', tool.countTasksByStatus());
-tool.removeTask('Write docs');
-console.log('After remove:', tool.listAllTasks());
-tool.changeStatus('Deploy Feature', 'Finished');
+tool.addTask('Fix 2nd bug', 'Low');
+console.log(tool.countTasksByStatus());
