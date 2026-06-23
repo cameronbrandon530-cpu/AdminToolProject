@@ -1,9 +1,16 @@
+const VALID_STATUSES = ['To Do', 'In Progress', 'Completed'];
+const VALID_PRIORITIES = ['High', 'Medium', 'Low'];
+
 class AdminTool{
     tasks = [];
     createTask(title, priority){
         return{title: title, priority: priority, status: 'To Do', createdDate: new Date()};
     }
     addTask(title, priority){
+        if(!VALID_PRIORITIES.includes(priority)){
+            console.log(`invalid prioity: ${priority}. Must be one of: ${VALID_PRIORITIES.join(', ')}`);
+            return;
+        }
         this.tasks.push(this.createTask(title, priority));
     }
     listAllTasks(){
@@ -40,7 +47,7 @@ class AdminTool{
 let tool = new AdminTool();
 tool.addTask('Fix bug', 'High');
 tool.addTask('Write docs', 'Low');
-tool.addTask('Deploy feature', 'Medium');
+tool.addTask('Deploy feature', 'today');
 console.log('All tasks:', tool.listAllTasks());
 tool.completeTask('Fix bug');
 console.log('Incomplete:', tool.listIncompleteTasks());
