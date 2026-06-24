@@ -3,9 +3,16 @@ const VALID_PRIORITIES = ['High', 'Medium', 'Low'];
 
 class AdminTool{
     tasks = [];
+    taskCounter = 0;
     createTask(title, priority){
-        return {title: title, priority: priority, status: 'To Do', createdDate: new Date()};
+        return {taskId: this.generateTaskId(), title: title, priority: priority, status: 'To Do', createdDate: new Date()};
         }
+    
+    generateTaskId(){
+        this.taskCounter++;
+        let taskId = "TA" + this.taskCounter.toString().padStart(3, '0');
+        return taskId;       
+    }
         
     addTask(title, priority){
         if(!VALID_PRIORITIES.includes(priority)){
@@ -19,6 +26,7 @@ class AdminTool{
         }
     }    
     listAllTasks(){
+        console.log("Number of Tasks: " + this.taskCounter);
         return this.tasks;
     }
     listIncompleteTasks(){
@@ -35,7 +43,7 @@ class AdminTool{
         let amountCompleted = this.tasks.length - amountIncomplete;
         return { incomplete: amountIncomplete, completed: amountCompleted };
     }
-    changeStatus(title, newStatus){
+    changeStatus(taskId, newStatus){
         if(!VALID_STATUSES.includes(newStatus)){
             console.log(`invalid status: ${newStatus}. must be one of: ${VALID_STATUSES.join(', ')}`);
             return;
@@ -46,8 +54,8 @@ class AdminTool{
             }
         }
     }
-    removeTask(title){
-        this.tasks = this.tasks.filter(t => t.title !== title);
+    removeTask(taskId){
+        this.tasks = this.tasks.filter(t => t.taskId !== taskId);
     }
 
     duplicateTitleCheck(newTitle){
@@ -63,5 +71,4 @@ class AdminTool{
 
 let tool = new AdminTool();
 tool.addTask('Fix bug', 'High');
-tool.addTask('Fix 2nd bug', 'Low');
-console.log(tool.countTasksByStatus());
+console.log(tool.listAllTasks());
