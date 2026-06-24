@@ -59,9 +59,21 @@ class AdminTool{
 
     filterTasksByStatus(status){
         let tasksByStatus = this.tasks.filter(task => task.status === status);
+        if(tasksByStatus.length === 0){
+            console.log(`No Tasks in status ${status} can be found`);
+        } else {    
         return tasksByStatus;
+        }
     }
-    
+
+    filterTasksByPriority(priority){
+        let tasksByPriority = this.tasks.filter(t => t.priority === priority);
+        if(tasksByPriority.length === 0){
+            console.log(`No ${priority} priority tasks can be found`);
+        } else {
+        return tasksByPriority;
+        }
+    }
 }
 
 
@@ -69,4 +81,5 @@ let tool = new AdminTool();
 tool.addTask('Fix bug', 'High');
 tool.addTask('new bug', 'Low');
 tool.changeStatus('TA001', 'In Progress');
-console.log(tool.filterTasksByStatus('In Progress'));
+console.log(tool.filterTasksByPriority('Medium'));
+
