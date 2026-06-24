@@ -48,10 +48,11 @@ class AdminTool{
         for(let t of this.tasks){
             if(t.taskId === taskId){
                 t.status = newStatus;
+                }
             }
         }
     }
-    }
+
     removeTask(taskId){
         this.tasks = this.tasks.filter(t => t.taskId !== taskId);
     }
