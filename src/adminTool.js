@@ -5,7 +5,7 @@ class AdminTool{
     tasks = [];
     taskCounter = 0;
     createTask(title, priority){
-        return {taskId: this.generateTaskId(), title: title, priority: priority, status: 'To Do', createdDate: new Date()};
+        return {taskId: this.generateTaskId(title), title: title, priority: priority, status: 'To Do', createdDate: new Date()};
         }
     
     generateTaskId(){
@@ -17,9 +17,6 @@ class AdminTool{
     addTask(title, priority){
         if(!VALID_PRIORITIES.includes(priority)){
             console.log(`invalid prioity: ${priority}. Must be one of: ${VALID_PRIORITIES.join(', ')}`);
-            return;
-        } else if (this.duplicateTitleCheck()){
-            console.log("Title cannot be duplicate");
             return;
         } else {
         this.tasks.push(this.createTask(title, priority));    
@@ -51,22 +48,12 @@ class AdminTool{
         for(let t of this.tasks){
             if(t.taskId === taskId){
                 t.status = newStatus;
-                return;
             }
         }
     }
     }
     removeTask(taskId){
         this.tasks = this.tasks.filter(t => t.taskId !== taskId);
-    }
-
-    duplicateTitleCheck(newTitle){
-        for(let t of this.tasks){
-            if(t.title === newTitle){
-                return true;
-            }
-        }
-        return false;
     }
 
     filterTasksByStatus(status){
