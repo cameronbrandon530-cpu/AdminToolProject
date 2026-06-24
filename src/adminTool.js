@@ -5,7 +5,7 @@ class AdminTool{
     tasks = [];
     taskCounter = 0;
     createTask(title, priority){
-        return {taskId: this.generateTaskId(title), title: title, priority: priority, status: 'To Do', createdDate: new Date()};
+        return {taskId: this.generateTaskId(), title: title, priority: priority, status: 'To Do', createdDate: new Date()};
         }
     
     generateTaskId(){
@@ -74,12 +74,21 @@ class AdminTool{
         return tasksByPriority;
         }
     }
+
+    searchByPartialTitle(input){
+        let matches = this.tasks.filter(t => t.title.toLowerCase().includes(input.toLowerCase()));
+        if(matches.length === 0){
+            console.log(`No task containing ${input} can be found.`);
+        } else {
+            console.log(matches.length + " matche/s found");
+            return matches;
+        }
+    }
 }
 
 
 let tool = new AdminTool();
 tool.addTask('Fix bug', 'High');
-tool.addTask('new bug', 'Low');
-tool.changeStatus('TA001', 'In Progress');
-console.log(tool.filterTasksByPriority('Medium'));
+tool.addTask('new task', 'Low');
+console.log(tool.searchByPartialTitle('BUG'));
 
