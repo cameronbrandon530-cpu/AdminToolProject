@@ -18,7 +18,7 @@ class AdminTool{
         if(!VALID_PRIORITIES.includes(priority)){
             console.log(`invalid prioity: ${priority}. Must be one of: ${VALID_PRIORITIES.join(', ')}`);
             return;
-        } else if (this.duplicateTitleCheck(title)){
+        } else if (this.duplicateTitleCheck()){
             console.log("Title cannot be duplicate");
             return;
         } else {
@@ -47,12 +47,14 @@ class AdminTool{
         if(!VALID_STATUSES.includes(newStatus)){
             console.log(`invalid status: ${newStatus}. must be one of: ${VALID_STATUSES.join(', ')}`);
             return;
-        }
+        } else { 
         for(let t of this.tasks){
-            if(t.title === title){
+            if(t.taskId === taskId){
                 t.status = newStatus;
+                return;
             }
         }
+    }
     }
     removeTask(taskId){
         this.tasks = this.tasks.filter(t => t.taskId !== taskId);
@@ -66,9 +68,17 @@ class AdminTool{
         }
         return false;
     }
+
+    filterTasksByStatus(status){
+        let tasksByStatus = this.tasks.filter(task => task.status === status);
+        return tasksByStatus;
+    }
+    
 }
 
 
 let tool = new AdminTool();
 tool.addTask('Fix bug', 'High');
-console.log(tool.listAllTasks());
+tool.addTask('new bug', 'Low');
+tool.changeStatus('TA001', 'In Progress');
+console.log(tool.filterTasksByStatus('In Progress'));
