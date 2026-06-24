@@ -86,7 +86,7 @@ class AdminTool{
     }
 
     sortByPriority(){
-        let sortedTasks = this.tasks.sort((a, b) => this.tasks.indexOf(a.priority) - VALID_STATUSES.indexOf(b.priority));
+        let sortedTasks = [...this.tasks].sort((a, b) => VALID_PRIORITIES.indexOf(a.priority) - VALID_PRIORITIES.indexOf(b.priority));
         return sortedTasks;
     }
 
