@@ -84,11 +84,17 @@ class AdminTool{
             return matches;
         }
     }
+
+    sortByPriority(){
+        let sortedTasks = this.tasks.sort((a, b) => this.tasks.indexOf(a.priority) - VALID_STATUSES.indexOf(b.priority));
+        return sortedTasks;
+    }
+
 }
 
 
 let tool = new AdminTool();
 tool.addTask('Fix bug', 'High');
 tool.addTask('new task', 'Low');
-console.log(tool.searchByPartialTitle('BUG'));
+console.log(tool.sortByPriority());
 
